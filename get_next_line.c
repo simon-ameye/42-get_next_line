@@ -6,7 +6,7 @@
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:19 by sameye            #+#    #+#             */
-/*   Updated: 2021/05/17 00:07:12 by sameye           ###   ########.fr       */
+/*   Updated: 2021/05/17 01:02:36 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ int	ft_put_rest_in_mem(char **line, char *mem)
 
 	i = 0;
 	j = 0;
-	while ((*line[i]))
+	while (((*line)[i]))
 	{
-		if (*line[i] == '\n')
+		if ((*line)[i] == '\n')
 		{
-			while (*line[i + j])
+			i++;
+			while ((*line)[i + j])
 			{
-				mem[j] = *line[i + j];
+				mem[j] = (*line)[i + j];
 				j++;
 			}
 			mem[j] = '\0';
-			*line[i] = '\0';
-
+			(*line)[i] = '\0';
 			return (1);
 		}
 		i++;
@@ -53,20 +53,21 @@ int	ft_put_rest_in_mem(char **line, char *mem)
 	return (-1);
 }
 
-
 int	ft_get_line(int fd, char **line)
 {
 	char	*buff;
 	int		err;
 	char	*newline;
 	static char	mem[BUFFER_SIZE + 1];
+	int end_reached;
 
+	end_reached = 0;
 	newline = ft_strjoin(*line, mem);
 	free(*line);
 	ft_bzero(mem, BUFFER_SIZE + 1);
 	*line = newline;
 
-	while (!(ft_has_return(*line)))
+	while ((!(ft_has_return(*line))) && (end_reached == 0))
 	{
 		buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		ft_bzero(buff, BUFFER_SIZE + 1);
@@ -75,12 +76,14 @@ int	ft_get_line(int fd, char **line)
 		err = read(fd, buff, BUFFER_SIZE);
 		if (err == -1)
 			return (-1);
+		if (err != BUFFER_SIZE)
+			end_reached = 1;
 		newline = ft_strjoin(*line, buff);
 		free(*line);
 		*line = newline;
 	}
 	ft_put_rest_in_mem(line, mem);
-	return (1);
+	return (!(end_reached));
 }
 
 int	get_next_line(int fd, char **line)
@@ -96,7 +99,7 @@ int	get_next_line(int fd, char **line)
 	res[0] = '\0';
 	*line = res;
 	err = ft_get_line(fd, line);
-	if (err == -1)
-		return (-1);
+	if (err == -1 || err == 0)
+		return (err);
 	return (1);
 }

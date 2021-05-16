@@ -10,7 +10,7 @@ int		main(int argc, char **argv)
 	(void) argc;
 	(void) argv;
 
-	fd = open("tests/sample.txt", O_RDONLY);
+	fd = open("tests/sample2.txt", O_RDONLY);
 /*
 	while (get_next_line(fd, &line) == 1)
 	{
@@ -18,10 +18,9 @@ int		main(int argc, char **argv)
 		free(line);
 	}
 */
-	get_next_line(fd, &line);
+	while (get_next_line(fd, &line) == 1)
+		printf("%s", line);
 	printf("%s", line);
-	get_next_line(fd, &line);
-	printf("\nNEWLINE\n%s", line);
 	free(line);
 	close(fd);
 }
