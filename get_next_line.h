@@ -6,7 +6,7 @@
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:45:05 by sameye            #+#    #+#             */
-/*   Updated: 2021/05/16 23:48:37 by sameye           ###   ########.fr       */
+/*   Updated: 2021/05/17 01:06:30 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,5 @@ int	ft_put_rest_in_mem(char **line, char *mem);
 
 
 void	*ft_memset(void *s, int c, size_t n);
-void	ft_bzero(void *s, size_t n);
-
 
 #endif

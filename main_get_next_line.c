@@ -11,13 +11,7 @@ int		main(int argc, char **argv)
 	(void) argv;
 
 	fd = open("tests/sample2.txt", O_RDONLY);
-/*
-	while (get_next_line(fd, &line) == 1)
-	{
-		printf("%s", line);
-		free(line);
-	}
-*/
+
 	while (get_next_line(fd, &line) == 1)
 		printf("%s", line);
 	printf("%s", line);

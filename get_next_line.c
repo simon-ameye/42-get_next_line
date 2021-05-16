@@ -6,7 +6,7 @@
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:19 by sameye            #+#    #+#             */
-/*   Updated: 2021/05/17 01:02:36 by sameye           ###   ########.fr       */
+/*   Updated: 2021/05/17 01:05:58 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ int	ft_get_line(int fd, char **line)
 	end_reached = 0;
 	newline = ft_strjoin(*line, mem);
 	free(*line);
-	ft_bzero(mem, BUFFER_SIZE + 1);
+	ft_memset(mem, 0, BUFFER_SIZE + 1);
 	*line = newline;
 
 	while ((!(ft_has_return(*line))) && (end_reached == 0))
 	{
 		buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		ft_bzero(buff, BUFFER_SIZE + 1);
+		ft_memset(buff, 0, BUFFER_SIZE + 1);
 		if (buff == NULL)
 			return (-1);
 		err = read(fd, buff, BUFFER_SIZE);
