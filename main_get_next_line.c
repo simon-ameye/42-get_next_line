@@ -15,6 +15,7 @@ int		main(int argc, char **argv)
 	while (get_next_line(fd, &line) == 1)
 		printf("%s", line);
 	printf("%s", line);
+
 	free(line);
 	close(fd);
 }

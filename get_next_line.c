@@ -6,7 +6,7 @@
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:19 by sameye            #+#    #+#             */
-/*   Updated: 2021/05/17 01:05:58 by sameye           ###   ########.fr       */
+/*   Updated: 2021/05/18 13:07:01 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_has_return(char *res)
 int	ft_put_rest_in_mem(char **line, char *mem)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -38,6 +38,7 @@ int	ft_put_rest_in_mem(char **line, char *mem)
 	{
 		if ((*line)[i] == '\n')
 		{
+			(*line)[i] = '\0';
 			i++;
 			while ((*line)[i + j])
 			{
@@ -45,7 +46,6 @@ int	ft_put_rest_in_mem(char **line, char *mem)
 				j++;
 			}
 			mem[j] = '\0';
-			(*line)[i] = '\0';
 			return (1);
 		}
 		i++;
@@ -55,35 +55,33 @@ int	ft_put_rest_in_mem(char **line, char *mem)
 
 int	ft_get_line(int fd, char **line)
 {
-	char	*buff;
-	int		err;
-	char	*newline;
+	char		*buff;
+	static int	err = 1;
+	char		*newline;
 	static char	mem[BUFFER_SIZE + 1];
-	int end_reached;
 
-	end_reached = 0;
 	newline = ft_strjoin(*line, mem);
 	free(*line);
-	ft_memset(mem, 0, BUFFER_SIZE + 1);
 	*line = newline;
-
-	while ((!(ft_has_return(*line))) && (end_reached == 0))
+	ft_memset(mem, 0, BUFFER_SIZE + 1);
+	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (buff == NULL)
+		return (-1);
+	while (!(ft_has_return(*line)) && err != 0)
 	{
-		buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		ft_memset(buff, 0, BUFFER_SIZE + 1);
-		if (buff == NULL)
-			return (-1);
 		err = read(fd, buff, BUFFER_SIZE);
 		if (err == -1)
 			return (-1);
-		if (err != BUFFER_SIZE)
-			end_reached = 1;
 		newline = ft_strjoin(*line, buff);
 		free(*line);
 		*line = newline;
 	}
+	free(buff);
 	ft_put_rest_in_mem(line, mem);
-	return (!(end_reached));
+	if (err == 0 && ft_strlen(mem) == 0)
+		return (0);
+	return (1);
 }
 
 int	get_next_line(int fd, char **line)
@@ -99,7 +97,5 @@ int	get_next_line(int fd, char **line)
 	res[0] = '\0';
 	*line = res;
 	err = ft_get_line(fd, line);
-	if (err == -1 || err == 0)
-		return (err);
-	return (1);
+	return (err);
 }
