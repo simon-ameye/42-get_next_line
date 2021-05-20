@@ -6,7 +6,7 @@
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:19 by sameye            #+#    #+#             */
-/*   Updated: 2021/05/20 11:10:46 by sameye           ###   ########.fr       */
+/*   Updated: 2021/05/20 11:44:31 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,22 @@ int	ft_put_rest_in_mem(char **line, char *mem)
 	return (-1);
 }
 
+int	ft_read_until_return (int fd, char **line, char *buff, char *newline)
+{
+	int	err;
+
+	err = 1;
+	while (!(ft_has_return(*line)) && err > 0)
+	{
+		ft_memset(buff, 0, BUFFER_SIZE + 1);
+		err = read(fd, buff, BUFFER_SIZE);
+		newline = ft_strjoin(*line, buff);
+		free(*line);
+		*line = newline;
+	}
+	return (err);
+}
+
 int	ft_get_line(int fd, char **line)
 {
 	char		*buff;
@@ -60,7 +76,6 @@ int	ft_get_line(int fd, char **line)
 	char		*newline;
 	static char	mem[BUFFER_SIZE + 1];
 
-	err = 1;
 	newline = ft_strjoin(*line, mem);
 	free(*line);
 	*line = newline;
@@ -68,21 +83,11 @@ int	ft_get_line(int fd, char **line)
 	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (buff == NULL)
 		return (-1);
-	while (!(ft_has_return(*line)) && err != 0)
-	{
-		ft_memset(buff, 0, BUFFER_SIZE + 1);
-		err = read(fd, buff, BUFFER_SIZE);
-		if (err == -1)
-		{
-			free(buff);
-			return (-1);
-		}
-		newline = ft_strjoin(*line, buff);
-		free(*line);
-		*line = newline;
-	}
+	err = ft_read_until_return (fd, line, buff, newline);
 	free(buff);
 	ft_put_rest_in_mem(line, mem);
+	if (err == -1)
+		return (-1);
 	if (err == 0 && ft_strlen(mem) == 0)
 		return (0);
 	return (1);
