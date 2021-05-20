@@ -16,6 +16,7 @@ int		main(int argc, char **argv)
 	{
 		printf("%s", line);
 		free(line);
+		printf("\n");
 	}
 
 	printf("%s", line);
