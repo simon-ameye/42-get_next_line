@@ -10,7 +10,7 @@ int		main(int argc, char **argv)
 	(void) argc;
 	(void) argv;
 
-	fd = open("tests/sample2.txt", O_RDONLY);
+	fd = open("gnlTester/files/multiple_line_no_nl", O_RDONLY);
 
 	while (get_next_line(fd, &line) == 1)
 	{

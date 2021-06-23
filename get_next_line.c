@@ -6,7 +6,7 @@
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:19 by sameye            #+#    #+#             */
-/*   Updated: 2021/05/20 11:48:04 by sameye           ###   ########.fr       */
+/*   Updated: 2021/06/23 19:14:05 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,19 @@ int	ft_put_rest_in_mem(char **line, char *mem)
 	return (-1);
 }
 
-int	ft_read_until_return (int fd, char **line, char *buff, char *newline)
+int	ft_read_until_return (int fd, char **line, char *buff)
 {
-	int	err;
+	int		err;
+	char	*templine;
 
 	err = 1;
 	while (!(ft_has_return(*line)) && err > 0)
 	{
 		ft_memset(buff, 0, BUFFER_SIZE + 1);
 		err = read(fd, buff, BUFFER_SIZE);
-		newline = ft_strjoin(*line, buff);
+		templine = ft_strjoin(*line, buff);
 		free(*line);
-		*line = newline;
+		*line = templine;
 	}
 	return (err);
 }
@@ -73,19 +74,22 @@ int	ft_get_line(int fd, char **line)
 {
 	char		*buff;
 	int			err;
-	char		*newline;
+	char		**newline;
+	char		*vnewline;
 	static char	mem[BUFFER_SIZE + 1];
 
-	newline = ft_strjoin(*line, mem);
+	newline = &vnewline;
+	*newline = ft_strjoin(*line, mem);
 	free(*line);
-	*line = newline;
 	ft_memset(mem, 0, BUFFER_SIZE + 1);
 	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (buff == NULL)
 		return (-1);
-	err = ft_read_until_return (fd, line, buff, newline);
+	err = ft_read_until_return (fd, newline, buff);
 	free(buff);
-	ft_put_rest_in_mem(line, mem);
+	ft_put_rest_in_mem(newline, mem);
+	*line = ft_strjoin(*newline, "");
+	free(*newline);
 	if (err == -1)
 		return (-1);
 	if (err == 0 && ft_strlen(mem) == 0)

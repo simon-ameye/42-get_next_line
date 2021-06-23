@@ -6,11 +6,12 @@
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:21 by sameye            #+#    #+#             */
-/*   Updated: 2021/05/17 01:06:22 by sameye           ###   ########.fr       */
+/*   Updated: 2021/06/23 18:45:34 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stddef.h>
 
 size_t	ft_strlen(const char *str)
 {
@@ -47,8 +48,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str[i] = '\0';
 	return (str);
 }
-
-#include <stddef.h>
 
 void	*ft_memset(void *s, int c, size_t n)
 {
