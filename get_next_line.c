@@ -95,30 +95,33 @@ int	ft_get_line(int fd, char **line, char **mem)
 	return (1);
 }
 
-int	get_next_line(int fd, char **line)
+char	*get_next_line(int fd)
 {
 	int			err;
 	static char	*mem[1024];
+	char		**line;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0)
-		return (-1);
+	line = malloc(sizeof(char **));
+	if (fd < 0 || BUFFER_SIZE <= 0 || line == NULL)
+		return (NULL);
 	if (mem[fd] == NULL)
 	{
 		mem[fd] = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		ft_memset(mem[fd], 0, BUFFER_SIZE + 1);
 		if (mem[fd] == NULL)
-			return (-1);
+			return (NULL);
 	}
 	err = ft_get_line(fd, line, mem);
 	if (err == 0 || err == -1)
 	{
 		free(mem[fd]);
 		mem[fd] = NULL;
+		*line = NULL;
 	}
 	if (err == -1)
 	{
 		free(*line);
 		*line = NULL;
 	}
-	return (err);
+	return (*line);
 }

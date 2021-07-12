@@ -10,11 +10,13 @@ int		main(int argc, char **argv)
 	(void) argc;
 	(void) argv;
 
+	printf("start reading\n");
 	fd = open("gnlTester/files/multiple_line_no_nl", O_RDONLY);
+	printf("fd read : %i\n", fd);
 
-	while (get_next_line(fd, &line) == 1)
+	while ((line = get_next_line(fd)) != NULL)
 	{
-		printf("%s", line);
+		printf("!%s!, %p", line, line);
 		free(line);
 		printf("\n");
 	}
@@ -22,4 +24,5 @@ int		main(int argc, char **argv)
 	printf("%s", line);
 	free(line);
 	close(fd);
+
 }

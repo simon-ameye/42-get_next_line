@@ -16,10 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-int		get_next_line(int fd, char **line);
+char *get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
-int		ft_get_line(int fd, char **line, char **mem);
+int	ft_get_line(int fd, char **line, char **mem);
 int		ft_put_rest_in_mem(char **line, char *mem);
 void	*ft_memset(void *s, int c, size_t n);
 
