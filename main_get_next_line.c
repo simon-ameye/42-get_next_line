@@ -6,22 +6,23 @@ int		main(int argc, char **argv)
 {
 	int		fd;
 	char	*line;
+	char	chartemp;
 
 	(void) argc;
 	(void) argv;
 
 	printf("start reading\n");
-	fd = open("gnlTester/files/multiple_line_no_nl", O_RDONLY);
+	fd = open("gnlTester/files/multiple_line_with_nl", O_RDONLY);
 	printf("fd read : %i\n", fd);
 
-	while ((line = get_next_line(fd)) != NULL)
+	line = &chartemp;
+	while (line != NULL)
 	{
-		printf("!%s!, %p", line, line);
+		line = get_next_line(fd);
+		printf("%s", line);
 		free(line);
-		printf("\n");
 	}
 
-	printf("%s", line);
 	free(line);
 	close(fd);
 
