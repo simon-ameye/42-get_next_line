@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line copie_bonus.h                        :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:45:05 by sameye            #+#    #+#             */
-/*   Updated: 2021/07/13 18:36:52 by sameye           ###   ########.fr       */
+/*   Updated: 2021/07/13 19:26:38 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-char *get_next_line(int fd);
+char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
-int	ft_get_line(int fd, char **line, char *mem);
+int		ft_get_line(int fd, char **line, char *mem);
 int		ft_put_rest_in_mem(char **line, char *mem);
 void	*ft_memset(void *s, int c, size_t n);
 

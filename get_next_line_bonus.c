@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line copie_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:19 by sameye            #+#    #+#             */
-/*   Updated: 2021/07/13 18:36:37 by sameye           ###   ########.fr       */
+/*   Updated: 2021/07/13 19:25:03 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
 int	ft_has_return(char *res)
 {
@@ -111,17 +110,13 @@ char	*get_next_line(int fd)
 		ft_memset(mem[fd], 0, BUFFER_SIZE + 1);
 	}
 	err = ft_get_line(fd, line, mem[fd]);
-	if (err == 0)
-	{
+	if (err == 0 || err == -1)
 		free(mem[fd]);
+	if (err == 0 || err == -1)
 		mem[fd] = NULL;
-	}
 	if (err == -1)
-	{
-		free(mem[fd]);
-		mem[fd] = NULL;
 		free(*line);
+	if (err == -1)
 		*line = NULL;
-	}
 	return (*line);
 }

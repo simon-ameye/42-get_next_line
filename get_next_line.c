@@ -6,7 +6,7 @@
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:19 by sameye            #+#    #+#             */
-/*   Updated: 2021/07/13 19:12:06 by sameye           ###   ########.fr       */
+/*   Updated: 2021/07/13 19:24:32 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,17 +110,13 @@ char	*get_next_line(int fd)
 		ft_memset(mem[fd], 0, BUFFER_SIZE + 1);
 	}
 	err = ft_get_line(fd, line, mem[fd]);
-	if (err == 0)
-	{
+	if (err == 0 || err == -1)
 		free(mem[fd]);
+	if (err == 0 || err == -1)
 		mem[fd] = NULL;
-	}
 	if (err == -1)
-	{
-		free(mem[fd]);
-		mem[fd] = NULL;
 		free(*line);
+	if (err == -1)
 		*line = NULL;
-	}
 	return (*line);
 }
