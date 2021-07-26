@@ -6,7 +6,7 @@
 /*   By: sameye <sameye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:19 by sameye            #+#    #+#             */
-/*   Updated: 2021/07/13 19:24:32 by sameye           ###   ########.fr       */
+/*   Updated: 2021/07/26 16:08:49 by sameye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*get_next_line(int fd)
 	char		*line2;
 
 	line = &line2;
-	if (fd < 0 || BUFFER_SIZE <= 0 || line == NULL)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (mem[fd] == NULL)
 	{
